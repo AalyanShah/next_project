@@ -1,4 +1,4 @@
-import ViewComment from "./ViewCommentButton";
+import Link from "next/link";
 
 export default async function Post() {
 
@@ -15,10 +15,10 @@ export default async function Post() {
                         return(
                             <li className="flex gap-5 justify-between p-4 border-1 border-solid rounded" key={post.id}>
                                 <div>
-                                    <div>{post.title}</div>
-                                    <div>{post.body}</div>
+                                    <div className="text-lg font-bold">{post.title}</div>
+                                    <div>{post.body.slice(0, 100)}...</div>
                                 </div>
-                                <ViewComment postID={post.id} />
+                                <Link href='/comment' className="bg-red-500 p-3 rounded text-white">View Comment</Link>
                             </li>
                         )
                     })

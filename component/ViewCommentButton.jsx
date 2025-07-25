@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link";
+
 export default function ViewComment({postID}) {
 
     const handleComment = (id) => {
@@ -8,7 +10,7 @@ export default function ViewComment({postID}) {
 
     return (
         <>
-            <button onClick={() => handleComment(postID)}>View Comment</button>
+            <Link href='/comment' className="bg-red-500 p-3 rounded text-white">View Comment</Link>
         </>
     )
 }
