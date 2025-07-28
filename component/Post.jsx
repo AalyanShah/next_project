@@ -18,7 +18,7 @@ export default async function Post() {
                                     <div className="text-lg font-bold">{post.title}</div>
                                     <div>{post.body.slice(0, 100)}...</div>
                                 </div>
-                                <Link href='/comment' className="bg-red-500 p-3 rounded text-white">View Comment</Link>
+                                <Link href={`/comment/${post.id}`} className="bg-red-500 p-3 rounded text-white">View Comment</Link>
                             </li>
                         )
                     })
