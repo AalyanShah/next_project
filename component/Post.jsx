@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default async function Post() {
 
-    const postData = await fetch(process.env.POST_API_KEY);
+    const postData = await fetch(process.env.NEXT_POST_API_KEY);
     const allPost = await postData.json();
     const slicedPost = allPost.slice(0, 10);
 
