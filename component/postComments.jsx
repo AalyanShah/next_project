@@ -4,9 +4,12 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import EditPostModal from "./modal/editModal";
 
 export default function Commnets({ id }) {
     const [comments, setComments] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [isPost, setIsPost] = useState(true);
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -33,12 +36,16 @@ export default function Commnets({ id }) {
                             <p>Comment: {comment.body}</p>
                         </div>
                         <div className="w-[10%] flex flex-col gap-3">
-                            <button className="p-[5px] rounded text-white bg-blue-500 hover:cursor-pointer hover:bg-blue-800">Edit</button>
+                            <button onClick={() => {
+                                setIsPost(false);
+                                setModalOpen(true);
+                            }} className="p-[5px] rounded text-white bg-blue-500 hover:cursor-pointer hover:bg-blue-800">Edit</button>
                             <button className="p-[5px] rounded text-white bg-red-500 hover:cursor-pointer hover:bg-red-800">Delete</button>
                         </div>
                     </li>
                 ))}
             </ul>
+                <EditPostModal isOpen={modalOpen} isPost={isPost} onClose={() => setModalOpen(false)} />
         </div>
     );
 }

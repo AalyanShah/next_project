@@ -8,8 +8,7 @@ export default function Post() {
 
     const [posts, setPosts] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
-    const [isPost, setIsPost] = useState(true); // ✅ use state
-
+    const [isPost, setIsPost] = useState(true);
     useEffect(() => {
         async function fetchData() {
             const res = await fetch(process.env.NEXT_PUBLIC_POST_API_KEY);
