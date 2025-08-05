@@ -1,28 +1,32 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { useIsPost } from '@/context/isPost';
+import { fetchingSinglePostData } from "@/lib/action";
 
-export default function SpecificPost({ id }) {
+export default function SpecificPost({ id, initialPost }) {
     const [specificPost, setSpecificPost] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const { userPost } = useIsPost();
 
     useEffect(() => {
         async function fetchPost() {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_POST_API_KEY}/${id}`);
-                const data = await res.json();
-                setSpecificPost(data);
+                let res;
+                if (userPost) {
+                    const response = await fetchingSinglePostData(id);
+                    res = response.posts;
+                } else {
+                    res = initialPost;
+                }
+                setSpecificPost(res);
             } catch (error) {
-                console.error("Failed to fetch post:", error);
-            } finally {
-                setLoading(false);
-            }
+                console.error("Error fetching post:", error);
+            } 
         }
 
         if (id) fetchPost();
-    }, [id]);
+    }, [id, userPost]);
 
-    if (loading) return <p>Loading...</p>;
     if (!specificPost) return <p>No post found.</p>;
 
     return (

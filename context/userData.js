@@ -15,10 +15,8 @@ export function UserDataProvider({ children }) {
     }
   }, []);
 
-  console.log("UserDataProvider rendered with userData:", userData);
-
   return (
-    <UserDataContext.Provider value={{ userData }}>
+    <UserDataContext.Provider value={{ userData, setUserData }}>
       {children}
     </UserDataContext.Provider>
   );

@@ -5,11 +5,13 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { loginDetails } from "@/lib/action";
 import { useRouter } from "next/navigation";
+import { useUserData } from "@/context/userData";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
+    const { setUserData } = useUserData();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,9 +24,10 @@ export default function Login() {
             const res = await loginDetails(formData);
             
             if (res?.success) {
-                toast.success("Login successful!");
                 sessionStorage.setItem("user", JSON.stringify(res.user));
-                router.push("/"); // ✅ change as needed
+                setUserData(res.user);
+                router.push("/");
+                toast.success("Login successful!");
             } else {
                 toast.error("Login failed!");
             }

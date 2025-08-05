@@ -25,6 +25,7 @@ db.prepare(`
 db.prepare(`
   CREATE TABLE IF NOT EXISTS comments (
     postId INTEGER NOT NULL,
+    userId INTEGER NOT NULL,
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     email TEXT NOT NULL,

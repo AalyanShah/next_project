@@ -6,20 +6,22 @@ import './Modal.css';
 import { editingComment, addingPost } from '@/lib/action';
 import { useContext } from 'react';
 import { useUserData } from "@/context/userData";
+import { useIsPost } from '@/context/isPost';
 
-export default function EditPostModal({ isOpen, onClose, isPost }) {
+export default function EditPostModal({ isOpen, onClose, commentId }) {
 
     if (!isOpen) return null
 
     const params = useParams();
 
     const { userData } = useUserData();
+    const { isPost } = useIsPost();
     const id = isPost ? userData?.id : params?.id;
 
     const postCommentAdding = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        formData.append("userId", id);
+        formData.append("id", commentId);
         console.log(id);
         let response;
 
@@ -45,12 +47,12 @@ export default function EditPostModal({ isOpen, onClose, isPost }) {
                     {isPost && (
                         <div className="mb-4">
                             <label className="block mb-2">Title</label>
-                            <input name="title" type="text" className="w-full p-2 border rounded" />
+                            <input name="title" required type="text" className="w-full p-2 border rounded" />
                         </div>
                     )}
                     <div className="mb-4">
                         <label className="block mb-2">Body</label>
-                        <textarea name="body" className="w-full p-2 border rounded" rows="4"></textarea>
+                        <textarea name="body" required className="w-full p-2 border rounded" rows="4"></textarea>
                     </div>
                     <button type="submit" className="bg-blue-500 text-white p-2 rounded">Submit</button>
                     <button onClick={onClose} className="bg-blue-500 text-white p-2 rounded ml-[10px]">Close</button>

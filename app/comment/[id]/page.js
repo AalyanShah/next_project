@@ -1,41 +1,26 @@
-'use client';
-
-import { useState } from "react";
-import { useParams } from "next/navigation";
-import AddPostModal from "@/component/modal/AddPostModal";
-import Commnets from "@/component/postComments";
+import AddCommentButton from "@/component/AddCommentButton";
 import SpecificPost from "@/component/specificPost";
+import Comments from "@/component/postComments";
 
-export default function Comment() {
-    const params = useParams();
-    const id = params?.id;
+export default async function CommentPage({ params }) {
+    const postId = params.id;
+    console.log(postId);
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [isPost, setIsPost] = useState(false); // ✅ make it state
+    const response = await fetch(`${process.env.NEXT_PUBLIC_POST_API_KEY}/${postId}`)
+        .then(res => res.json());
+
+    const apiFetch = fetch(`${process.env.NEXT_PUBLIC_POST_API_KEY}/${postId}/comments`)
+        .then(res => res.json());
 
     return (
         <div className="p-5 pb-20">
             <div className="flex justify-between items-center mb-5">
-                <h1 className="text-3xl font-bold">Post Details {id}</h1>
-                <button
-                    onClick={() => {
-                        setIsPost(false);         // ✅ set using state
-                        setModalOpen(true);
-                    }}
-                    className="p-[10px] rounded text-white bg-black hover:cursor-pointer"
-                >
-                    + Add Comment
-                </button>
+                <h1 className="text-3xl font-bold">Post Details {postId}</h1>
+                <AddCommentButton postId={postId} />
             </div>
 
-            <AddPostModal
-                isOpen={modalOpen}
-                isPost={isPost}
-                onClose={() => setModalOpen(false)}
-            />
-
-            <SpecificPost id={id} />
-            <Commnets id={id} />
+            <SpecificPost id={postId} initialPost={response}/>
+            <Comments id={postId} initialPost={apiFetch} />
         </div>
     );
 }
