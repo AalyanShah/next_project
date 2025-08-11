@@ -6,11 +6,11 @@ export default async function CommentPage({ params }) {
     const postId = params.id;
     console.log(postId);
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_POST_API_KEY}/${postId}`)
-        .then(res => res.json());
+    const response = await fetch(`${process.env.NEXT_PUBLIC_POST_API_KEY}/${postId}`);
+    const post = await response.json();
 
-    const apiFetch = fetch(`${process.env.NEXT_PUBLIC_POST_API_KEY}/${postId}/comments`)
-        .then(res => res.json());
+    const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_POST_API_KEY}/${postId}/comments`);
+    const comments = await commentsResponse.json();
 
     return (
         <div className="p-5 pb-20">
@@ -19,8 +19,8 @@ export default async function CommentPage({ params }) {
                 <AddCommentButton postId={postId} />
             </div>
 
-            <SpecificPost id={postId} initialPost={response}/>
-            <Comments id={postId} initialPost={apiFetch} />
+            <SpecificPost id={postId} initialPost={post} />
+            <Comments id={postId} initialPost={comments} />
         </div>
     );
 }

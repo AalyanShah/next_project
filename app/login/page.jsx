@@ -6,12 +6,15 @@ import { toast } from "react-toastify";
 import { loginDetails } from "@/lib/action";
 import { useRouter } from "next/navigation";
 import { useUserData } from "@/context/userData";
+import { useDispatch } from "react-redux";
+import { setUserData } from "@/redux/slice/userData";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
-    const { setUserData } = useUserData();
+    // const { setUserData } = useUserData();
+    const dispatch = useDispatch()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +28,7 @@ export default function Login() {
             
             if (res?.success) {
                 sessionStorage.setItem("user", JSON.stringify(res.user));
-                setUserData(res.user);
+                dispatch(setUserData(res.user))
                 router.push("/");
                 toast.success("Login successful!");
             } else {

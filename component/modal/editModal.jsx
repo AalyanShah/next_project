@@ -7,6 +7,7 @@ import { editingComment, addingPost } from '@/lib/action';
 import { useContext } from 'react';
 import { useUserData } from "@/context/userData";
 import { useIsPost } from '@/context/isPost';
+import { useSelector, useDispatch } from "react-redux";
 
 export default function EditPostModal({ isOpen, onClose, commentId }) {
 
@@ -14,7 +15,8 @@ export default function EditPostModal({ isOpen, onClose, commentId }) {
 
     const params = useParams();
 
-    const { userData } = useUserData();
+    // const { userData } = useUserData();
+    const userData = useSelector((state) => state.userData.value);
     const { isPost } = useIsPost();
     const id = isPost ? userData?.id : params?.id;
 

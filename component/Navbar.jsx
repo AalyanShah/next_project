@@ -3,10 +3,14 @@ import { useUserData } from "@/context/userData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useIsPost } from '@/context/isPost';
+import { useSelector, useDispatch } from "react-redux";
+import { setUserData } from "@/redux/slice/userData";
 
 export default function Navbar() {
-    const { userData, setUserData } = useUserData();
+    // const { userData, setUserData } = useUserData();
     const { userPost, setUserPost } = useIsPost();
+    const userData = useSelector((state) => state.userData.value);
+    const dispatch = useDispatch()
 
     return (
         <div className="flex justify-between py-5 px-10 bg-[#f5f5f5] items-center relative">
@@ -29,7 +33,7 @@ export default function Navbar() {
                             onClick={() => {
                                 // Clear user session logic here
                                 sessionStorage.removeItem("user");
-                                setUserData(null);
+                                dispatch(setUserData(null));
                             }}
                             className="w-full px-4 py-2 hover:text-red-500"
                         >

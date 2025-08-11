@@ -8,6 +8,7 @@ import { fetchingPostData } from "@/lib/action";
 import { useUserData } from "@/context/userData";
 import { toast } from 'react-toastify';
 import EditPostModal from "./modal/editModal";
+import { useSelector } from "react-redux";
 
 export default function Post({ initialPosts }) {
     const [allPosts, setAllPosts] = useState([]);
@@ -15,7 +16,8 @@ export default function Post({ initialPosts }) {
     const [editingPostId, setEditingPostId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const { userPost, postId, setIsPost, setPostId } = useIsPost();
-    const { userData } = useUserData();
+    // const { userData } = useUserData();
+    const userData = useSelector((state) => state.userData.value);
 
     useEffect(() => {
         console.log(postId);

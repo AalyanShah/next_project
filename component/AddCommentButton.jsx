@@ -5,11 +5,13 @@ import AddPostModal from "@/component/modal/AddPostModal";
 import { toast } from 'react-toastify';
 import { useUserData } from "@/context/userData";
 import { useIsPost } from "@/context/isPost";
+import { useSelector } from "react-redux";
 
 export default function AddCommentButton() {
     const [modalOpen, setModalOpen] = useState(false);
-    const { userData } = useUserData();
+    // const { userData } = useUserData();
     const { setIsPost } = useIsPost();
+    const userData = useSelector((state) => state.userData.value);
 
     const handleClick = () => {
         if (!userData?.id) {

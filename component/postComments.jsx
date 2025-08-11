@@ -8,13 +8,15 @@ import { useIsPost } from '@/context/isPost';
 import { deletCommentData, fetchingCommentData } from "@/lib/action";
 import { toast } from 'react-toastify';
 import { useUserData } from "@/context/userData";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Commnets({ id, initialPost }) {
     const [comments, setComments] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const { setIsPost } = useIsPost();
     const [editingCommentId, setEditingCommentId] = useState(null);
-    const { userData } = useUserData();
+    // const { userData } = useUserData();
+    const userData = useSelector((state) => state.userData.value);
 
     const fetchComments = async () => {
         const dbFetch = fetchingCommentData(id);
@@ -38,7 +40,7 @@ export default function Commnets({ id, initialPost }) {
 
     useEffect(() => {
         if (id) fetchComments();
-    }, [id, comments]);
+    }, [id]);
 
     const handleDelete = async (commentId) => {
         const result = await deletCommentData(commentId);
